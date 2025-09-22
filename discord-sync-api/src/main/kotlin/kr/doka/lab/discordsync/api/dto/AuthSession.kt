@@ -11,5 +11,5 @@ data class AuthSession(
     val status: AuthStatus,
     val createdAt: Instant,
     val expiresAt: Instant,
-    val completedAt: Instant?
+    val completedAt: Instant?,
 )

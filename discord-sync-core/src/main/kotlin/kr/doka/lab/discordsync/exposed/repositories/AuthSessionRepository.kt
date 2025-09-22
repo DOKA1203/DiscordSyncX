@@ -11,36 +11,42 @@ import java.time.Instant
 import java.util.UUID
 
 class AuthSessionRepository {
+    fun create(
+        mcUuid: UUID,
+        ttlSeconds: Long = 600,
+    ): AuthSession =
+        transaction {
+            val now = Instant.now()
+            val state = UUID.randomUUID().toString()
+            val expiresAt = now.plusSeconds(ttlSeconds)
 
-    fun create(mcUuid: UUID, ttlSeconds: Long = 600): AuthSession = transaction {
-        val now = Instant.now()
-        val state = UUID.randomUUID().toString()
-        val expiresAt = now.plusSeconds(ttlSeconds)
+            AuthSessionEntity.new {
+                this.mcUuid = mcUuid
+                this.state = state
+                this.status = AuthStatus.PENDING
+                this.createdAt = now
+                this.expiresAt = expiresAt
+            }.toDTO()
+        }
 
-        AuthSessionEntity.new {
-            this.mcUuid = mcUuid
-            this.state = state
-            this.status = AuthStatus.PENDING
-            this.createdAt = now
-            this.expiresAt = expiresAt
-        }.toDTO()
-    }
+    fun findByState(state: String): AuthSession? =
+        transaction {
+            AuthSessionEntity.find { AuthSessions.state eq state }.singleOrNull()?.toDTO()
+        }
 
-    fun findByState(state: String): AuthSession? = transaction {
-        AuthSessionEntity.find { AuthSessions.state eq state }.singleOrNull()?.toDTO()
-    }
+    fun markCompleted(state: String) =
+        transaction {
+            AuthSessionEntity.find { AuthSessions.state eq state }.singleOrNull()?.apply {
+                status = AuthStatus.COMPLETED
+                completedAt = Instant.now()
+            } ?: Unit
+        }
 
-    fun markCompleted(state: String) = transaction {
-        AuthSessionEntity.find { AuthSessions.state eq state }.singleOrNull()?.apply {
-            status = AuthStatus.COMPLETED
-            completedAt = Instant.now()
-        } ?: Unit
-    }
-
-    fun expireOldSessions() = transaction {
-        val now = Instant.now()
-        AuthSessionEntity.find {
-            (AuthSessions.expiresAt less now) and (AuthSessions.status eq AuthStatus.PENDING)
-        }.forEach { it.status = AuthStatus.EXPIRED }
-    }
+    fun expireOldSessions() =
+        transaction {
+            val now = Instant.now()
+            AuthSessionEntity.find {
+                (AuthSessions.expiresAt less now) and (AuthSessions.status eq AuthStatus.PENDING)
+            }.forEach { it.status = AuthStatus.EXPIRED }
+        }
 }

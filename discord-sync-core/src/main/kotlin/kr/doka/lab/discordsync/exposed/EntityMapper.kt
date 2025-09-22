@@ -7,15 +7,34 @@ import kr.doka.lab.discordsync.exposed.entities.AccountLinkEntity
 import kr.doka.lab.discordsync.exposed.entities.AuthSessionEntity
 import kr.doka.lab.discordsync.exposed.entities.TokenEntity
 
-fun AuthSessionEntity.toDTO() = AuthSession(
-    id.value, mcUuid, state, status, createdAt, expiresAt, completedAt
-)
+fun AuthSessionEntity.toDTO() =
+    AuthSession(
+        id.value,
+        mcUuid,
+        state,
+        status,
+        createdAt,
+        expiresAt,
+        completedAt,
+    )
 
-fun AccountLinkEntity.toDTO() = AccountLink(
-    id.value, mcUuid, discordUserId, linkedAt, verifiedAt, isActive
-)
+fun AccountLinkEntity.toDTO() =
+    AccountLink(
+        id.value,
+        mcUuid,
+        discordUserId,
+        linkedAt,
+        verifiedAt,
+        isActive,
+    )
 
-fun TokenEntity.toDTO() = Token(
-    id.value, accountLink.id.value, accessToken, refreshToken,
-    tokenType, expiresAt, createdAt, updatedAt
-)
+fun TokenEntity.toDTO() =
+    Token(
+        accountLink.id.value,
+        accessToken,
+        refreshToken,
+        tokenType,
+        expiresAt,
+        createdAt,
+        updatedAt,
+    )

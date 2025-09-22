@@ -9,5 +9,5 @@ data class AccountLink(
     val discordUserId: Long,
     val linkedAt: Instant,
     val verifiedAt: Instant?,
-    val isActive: Boolean
+    val isActive: Boolean,
 )

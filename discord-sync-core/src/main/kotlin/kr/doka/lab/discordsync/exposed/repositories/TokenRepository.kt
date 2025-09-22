@@ -11,28 +11,33 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.Instant
 
 class TokenRepository {
+    fun saveForAccountLink(
+        accountLinkId: Long,
+        token: Token,
+    ): Token =
+        transaction {
+            val link =
+                AccountLinkEntity.findById(accountLinkId)
+                    ?: error("AccountLink not found: $accountLinkId")
 
-    fun saveForAccountLink(accountLinkId: Long, token: Token): Token = transaction {
-        val link = AccountLinkEntity.findById(accountLinkId)
-            ?: error("AccountLink not found: $accountLinkId")
+            // 최신 1건만 보관
+            TokenEntity.find { Tokens.accountLink eq link.id }.forEach { it.delete() }
 
-        // 최신 1건만 보관
-        TokenEntity.find { Tokens.accountLink eq link.id }.forEach { it.delete() }
+            val now = Instant.now()
+            TokenEntity.new {
+                this.accountLink = link
+                this.accessToken = token.accessToken
+                this.refreshToken = token.refreshToken
+                this.tokenType = token.tokenType
+                this.expiresAt = token.expiresAt
+                this.createdAt = now
+                this.updatedAt = now
+            }.toDTO()
+        }
 
-        val now = Instant.now()
-        TokenEntity.new {
-            this.accountLink = link
-            this.accessToken = token.accessToken
-            this.refreshToken = token.refreshToken
-            this.tokenType = token.tokenType
-            this.expiresAt = token.expiresAt
-            this.createdAt = now
-            this.updatedAt = now
-        }.toDTO()
-    }
-
-    fun deleteByAccountLink(accountLinkId: Long) = transaction {
-        val linkId = EntityID(accountLinkId, AccountLinks)
-        TokenEntity.find { Tokens.accountLink eq linkId }.forEach { it.delete() }
-    }
+    fun deleteByAccountLink(accountLinkId: Long) =
+        transaction {
+            val linkId = EntityID(accountLinkId, AccountLinks)
+            TokenEntity.find { Tokens.accountLink eq linkId }.forEach { it.delete() }
+        }
 }

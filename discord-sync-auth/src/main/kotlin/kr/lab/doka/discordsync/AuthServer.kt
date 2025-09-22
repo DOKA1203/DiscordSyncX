@@ -42,7 +42,6 @@ class AuthServer(val config: DiscordSyncConfig) {
     val accountLinkRepository = AccountLinkRepository()
     val tokenRepository = TokenRepository()
 
-
     val scopes = listOf("identify", "email", "guilds.join")
 
     val discordHttp = DiscordHttp(config)
@@ -62,14 +61,15 @@ class AuthServer(val config: DiscordSyncConfig) {
 
             sessionRepository.findByState(state)
 
-            val params = mapOf(
-                "client_id" to config.discordClientId,
-                "redirect_uri" to config.discordRedirectUrl,
-                "response_type" to "code",
-                "scope" to scopes.joinToString(" "),
-                "state" to state,
-                "prompt" to "consent"
-            )
+            val params =
+                mapOf(
+                    "client_id" to config.discordClientId,
+                    "redirect_uri" to config.discordRedirectUrl,
+                    "response_type" to "code",
+                    "scope" to scopes.joinToString(" "),
+                    "state" to state,
+                    "prompt" to "consent",
+                )
             val qs = params.entries.joinToString("&") { (k, v) -> "$k=${url(v)}" }
             ctx.redirect("${config.discordAuthUrl}?$qs")
         }
@@ -97,15 +97,16 @@ class AuthServer(val config: DiscordSyncConfig) {
             val link = accountLinkRepository.link(found!!.mcUuid, me.id!!.toLong())
             tokenRepository.saveForAccountLink(
                 accountLinkId = link.id,
-                token = Token(
-                    accessToken = tokens.accessToken!!,
-                    refreshToken = tokens.refreshToken!!,
-                    tokenType = "Bearer",
-                    expiresAt = Instant.now().plusSeconds(3600),
-                    createdAt = Instant.now(),
-                    updatedAt = Instant.now(),
-                    accountLinkId = link.id
-                )
+                token =
+                    Token(
+                        accessToken = tokens.accessToken!!,
+                        refreshToken = tokens.refreshToken!!,
+                        tokenType = "Bearer",
+                        expiresAt = Instant.now().plusSeconds(3600),
+                        createdAt = Instant.now(),
+                        updatedAt = Instant.now(),
+                        accountLinkId = link.id,
+                    ),
             )
 
             // 3) 세션 완료

@@ -9,5 +9,5 @@ data class Token(
     val tokenType: String,
     val expiresAt: Instant,
     val createdAt: Instant,
-    val updatedAt: Instant
+    val updatedAt: Instant,
 )

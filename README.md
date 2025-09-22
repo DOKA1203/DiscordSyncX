@@ -58,6 +58,11 @@
 bot-token: "YOUR_BOT_TOKEN_HERE"
 guild-id: "YOUR_DISCORD_GUILD_ID_HERE"
 
+discord:
+    clientId:
+    clientSecret:
+    redirectUri:
+
 # Database Settings
 # 데이타베이스 설정 (MariaDB만 지원)
 database:

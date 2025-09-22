@@ -39,6 +39,8 @@ class DiscordSyncPlugin : JavaPlugin() {
                     port = config.getInt("database.port", 3306),
                     username = config.getString("database.username") ?: "root",
                     password = config.getString("database.password") ?: "",
+                    discordClientId = config.getString("discord.client-id") ?: "",
+                    discordClientSecret = config.getString("discord.client-secret") ?: "",
                 ),
             )
 
