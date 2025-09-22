@@ -1,0 +1,9 @@
+bot-token:
+guild-id:
+
+database:
+  host: 192.168.0.113
+  port: 3306
+  database: Experiments
+  username: root
+  password:
