@@ -37,26 +37,33 @@ class LoginListener : Listener {
 
         val state = sessionRepository.create(event.connection.profile.id!!)
 
-        val dialog = Dialog.create { builder ->
-            builder.empty()
-                .base(
-                    DialogBase.builder(Component.text("Accept our rules!", NamedTextColor.LIGHT_PURPLE))
-                        .canCloseWithEscape(false)
-                        .body(listOf(
-                            DialogBody.plainMessage(Component.text("우리 서버에 들어오기 위해선 디스코드 인증을 완료해야 합니다."))
-                        ))
-                        .build()
-                ).type(
-                    DialogType.multiAction(
-                        listOf(
-                            ActionButton.builder(Component.text("인증하기", TextColor.color(0xFF8B8E)))
-                                .tooltip(Component.text("클릭하여 인증하세요"))
-                                .action(DialogAction.staticAction(ClickEvent.openUrl("http://127.0.0.1:8080/authentication/${state.state}")))
-                                .build()
-                        )
-                    ).build()
-                )
-        }
+        val dialog =
+            Dialog.create { builder ->
+                builder.empty()
+                    .base(
+                        DialogBase.builder(Component.text("Accept our rules!", NamedTextColor.LIGHT_PURPLE))
+                            .canCloseWithEscape(false)
+                            .body(
+                                listOf(
+                                    DialogBody.plainMessage(Component.text("우리 서버에 들어오기 위해선 디스코드 인증을 완료해야 합니다.")),
+                                ),
+                            )
+                            .build(),
+                    ).type(
+                        DialogType.multiAction(
+                            listOf(
+                                ActionButton.builder(Component.text("인증하기", TextColor.color(0xFF8B8E)))
+                                    .tooltip(Component.text("클릭하여 인증하세요"))
+                                    .action(
+                                        DialogAction.staticAction(
+                                            ClickEvent.openUrl("http://127.0.0.1:8080/authentication/${state.state}"),
+                                        ),
+                                    )
+                                    .build(),
+                            ),
+                        ).build(),
+                    )
+            }
         var isCompleted = false
         event.connection.audience.showDialog(dialog)
         loop@ for (i in 0..10) {

@@ -2,12 +2,6 @@ package kr.lab.doka.discordsync
 
 import io.javalin.Javalin
 import io.javalin.http.HttpStatus
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.launch
 import kr.doka.lab.discordsync.DiscordSyncConfig
 import kr.doka.lab.discordsync.api.dto.Token
 import kr.doka.lab.discordsync.discord.DiscordUser
