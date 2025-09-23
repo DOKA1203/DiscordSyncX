@@ -17,7 +17,6 @@ import kr.doka.lab.discordsync.exposed.repositories.TokenRepository
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.time.Instant
-import java.util.concurrent.Executors
 
 class AuthServer(val config: DiscordSyncConfig) {
     val app: Javalin =
@@ -25,18 +24,6 @@ class AuthServer(val config: DiscordSyncConfig) {
             cfg.http.defaultContentType = "application/json"
             cfg.showJavalinBanner = false
         }.start(8080)
-    val serverDispatcher =
-        Executors.newSingleThreadExecutor { r ->
-            Thread(r, "javalin-coroutine-thread").apply { isDaemon = false }
-        }.asCoroutineDispatcher()
-
-    val serverScope =
-        CoroutineScope(
-            SupervisorJob() +
-                serverDispatcher +
-                CoroutineName("DiscordSyncScope") +
-                CoroutineExceptionHandler { _, e -> println("Coroutine error: $e") },
-        )
 
     val sessionRepository = AuthSessionRepository()
     val accountLinkRepository = AccountLinkRepository()
@@ -51,7 +38,9 @@ class AuthServer(val config: DiscordSyncConfig) {
     init {
         app.get("/") { ctx ->
             val user = ctx.sessionAttribute<DiscordUser>("user")
-            ctx.json(mapOf("logged_in" to (user != null), "user" to user))
+            // ctx.json(mapOf("logged_in" to (user != null), "user" to user))
+
+            ctx.redirect("https://doka.kr")
         }
 
         // 인증 시작
@@ -113,11 +102,13 @@ class AuthServer(val config: DiscordSyncConfig) {
             sessionRepository.markCompleted(state)
 
             ctx.sessionAttribute("user", DiscordUser(me, tokens))
-            ctx.redirect("/")
+            ctx.redirect("/completed")
         }
 
-        serverScope.launch {
-            app.start(7000)
+        app.get("/completed") { ctx ->
+            this.javaClass.classLoader.getResourceAsStream("completed.html")?.let {
+                ctx.html(it.bufferedReader().readText())
+            } ?: ctx.status(HttpStatus.NOT_FOUND)
         }
     }
 }

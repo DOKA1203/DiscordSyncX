@@ -7,10 +7,16 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kr.doka.lab.discordsync.exposed.tables.AccountLinks
+import kr.doka.lab.discordsync.exposed.tables.AuthSessions
+import kr.doka.lab.discordsync.exposed.tables.Tokens
+import kr.doka.lab.discordsync.listeners.LoginListener
 import kr.lab.doka.discordsync.AuthServer
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
 
 class DiscordSyncPlugin : JavaPlugin() {
     val pluginScope =
@@ -50,6 +56,12 @@ class DiscordSyncPlugin : JavaPlugin() {
             Bukkit.getPluginManager().disablePlugin(this)
             return
         }
+
+        transaction {
+            SchemaUtils.createMissingTablesAndColumns(AuthSessions, Tokens, AccountLinks)
+        }
+
+        LoginListener()
     }
 
     override fun onDisable() {
