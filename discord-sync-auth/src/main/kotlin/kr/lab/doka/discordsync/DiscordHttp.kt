@@ -12,15 +12,15 @@ class DiscordHttp(val config: DiscordSyncConfig) {
         // Fuel은 params를 넘기면 기본적으로 x-www-form-urlencoded로 인코딩합니다.
         val params =
             listOf(
-                "client_id" to config.discordClientId,
-                "client_secret" to config.discordClientSecret,
+                "client_id" to config.discordApiConfig.clientId,
+                "client_secret" to config.discordApiConfig.clientSecret,
                 "grant_type" to "authorization_code",
                 "code" to code,
-                "redirect_uri" to config.discordRedirectUrl,
+                "redirect_uri" to config.discordApiConfig.discordRedirectUrl,
             )
 
         val (_, response, result) =
-            Fuel.post(config.discordTokenUrl, params)
+            Fuel.post(config.discordApiConfig.discordTokenUrl, params)
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .responseString()
 

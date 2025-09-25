@@ -30,7 +30,6 @@ class LoginListener : Listener {
 
     @EventHandler
     fun onPlayerConfigure(event: AsyncPlayerConnectionConfigureEvent) {
-        println(Thread.currentThread().name)
         if (event.connection.profile.id == null) return
         val link = linkRepository.findByMinecraftUuid(event.connection.profile.id!!).getOrNull(0)
         if (link != null) return
@@ -41,10 +40,12 @@ class LoginListener : Listener {
             Dialog.create { builder ->
                 builder.empty()
                     .base(
-                        DialogBase.builder(Component.text("Accept our rules!", NamedTextColor.LIGHT_PURPLE))
+                        DialogBase.builder(Component.text("DiscordSyncX by DOKA1203", NamedTextColor.LIGHT_PURPLE))
                             .canCloseWithEscape(false)
                             .body(
                                 listOf(
+                                    DialogBody.plainMessage(Component.text(" ")),
+                                    DialogBody.plainMessage(Component.text(" ")),
                                     DialogBody.plainMessage(Component.text("우리 서버에 들어오기 위해선 디스코드 인증을 완료해야 합니다.")),
                                 ),
                             )
@@ -64,6 +65,7 @@ class LoginListener : Listener {
                         ).build(),
                     )
             }
+
         var isCompleted = false
         event.connection.audience.showDialog(dialog)
         loop@ for (i in 0..10) {

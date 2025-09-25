@@ -46,15 +46,15 @@ class AuthServer(val config: DiscordSyncConfig) {
 
             val params =
                 mapOf(
-                    "client_id" to config.discordClientId,
-                    "redirect_uri" to config.discordRedirectUrl,
+                    "client_id" to config.discordApiConfig.clientId,
+                    "redirect_uri" to config.discordApiConfig.discordRedirectUrl,
                     "response_type" to "code",
                     "scope" to scopes.joinToString(" "),
                     "state" to state,
                     "prompt" to "consent",
                 )
             val qs = params.entries.joinToString("&") { (k, v) -> "$k=${url(v)}" }
-            ctx.redirect("${config.discordAuthUrl}?$qs")
+            ctx.redirect("${config.discordApiConfig.discordAuthUrl}?$qs")
         }
 
         // 콜백 처리

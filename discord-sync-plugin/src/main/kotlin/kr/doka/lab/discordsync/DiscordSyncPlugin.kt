@@ -30,25 +30,37 @@ class DiscordSyncPlugin : JavaPlugin() {
     companion object {
         lateinit var instance: DiscordSyncPlugin
         lateinit var authServer: AuthServer
+
+        lateinit var pluginConfig: DiscordSyncConfig
     }
+
+
 
     override fun onEnable() {
         instance = this
         saveDefaultConfig()
-
-        authServer =
-            AuthServer(
-                DiscordSyncConfig(
-                    botToken = config.getString("bot-token") ?: "",
-                    database = config.getString("database.database") ?: "",
-                    host = config.getString("database.host") ?: "127.0.0.1",
-                    port = config.getInt("database.port", 3306),
-                    username = config.getString("database.username") ?: "root",
-                    password = config.getString("database.password") ?: "",
-                    discordClientId = config.getString("discord.client-id") ?: "",
-                    discordClientSecret = config.getString("discord.client-secret") ?: "",
-                ),
+        pluginConfig = DiscordSyncConfig(
+            DiscordBotConfig(
+                config.getString("bot.token")!!,
+                config.getString("bot.guildId")!!,
+            ),
+            DiscordApiConfig(
+                config.getString("discord-api.client-id")!!,
+                config.getString("discord-api.client-secret")!!,
+                config.getString("discord-api.redirect-url")!!,
+            ),
+            ServerConfig(
+                config.getInt("server.port", 8080),
+            ),
+            DatabaseConfig(
+                config.getString("database.database")!!,
+                config.getString("database.host")!!,
+                config.getInt("database.port", 3306),
+                config.getString("database.username")!!,
+                config.getString("database.password")!!,
             )
+        )
+        authServer = AuthServer(pluginConfig)
 
         if (!connectMariaDB()) {
             logger.severe("데이터베이스 연결에 실패하여 플러그인을 비활성화합니다.")
@@ -70,19 +82,14 @@ class DiscordSyncPlugin : JavaPlugin() {
 
     fun connectMariaDB(): Boolean {
         return try {
+            val dbConfig = pluginConfig.databaseConfig
             val cfg =
                 HikariConfig().apply {
                     driverClassName = "org.mariadb.jdbc.Driver"
 
-                    val host = config.getString("database.host") ?: "127.0.0.1"
-                    val port = config.getInt("database.port", 3306)
-                    val dbName = config.getString("database.database") ?: "Experiments"
-                    val user = config.getString("database.username") ?: "root"
-                    val pass = config.getString("database.password") ?: ""
-
-                    jdbcUrl = "jdbc:mariadb://$host:$port/$dbName?useUnicode=true&characterEncoding=utf8"
-                    username = user
-                    password = pass
+                    jdbcUrl = "jdbc:mariadb://${dbConfig.host}:${dbConfig.port}/${dbConfig.database}?useUnicode=true&characterEncoding=utf8"
+                    username = dbConfig.username
+                    password = dbConfig.password
 
                     maximumPoolSize = 5
                     addDataSourceProperty("useServerPrepStmts", "true")

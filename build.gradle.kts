@@ -1,14 +1,18 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     kotlin("jvm") version "2.2.10"
     java
 
     id("com.gradleup.shadow") version "8.3.0"
+    kotlin("plugin.serialization") version "2.2.10"
     id("com.diffplug.spotless") version "6.25.0" apply false
 }
 
 allprojects {
     apply(plugin = "java")
     apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = "org.jetbrains.kotlin.plugin.serialization")
 
     repositories {
         mavenCentral()
@@ -68,6 +72,11 @@ subprojects {
 
 group = "kr.doka.lab"
 version = "1.0-SNAPSHOT"
+
+tasks.withType<ShadowJar> {
+    // relocate("kotlinx.serialization", "kr.lab.doka.discordsync.libs.kotlinx.serialization")
+    archiveClassifier.set("") // 'all' 같은 접미사 제거
+}
 
 tasks.build {
     dependsOn("shadowJar")
