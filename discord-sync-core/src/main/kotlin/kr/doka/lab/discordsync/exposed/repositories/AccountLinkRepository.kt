@@ -55,4 +55,18 @@ class AccountLinkRepository {
             (AccountLinks.mcUuid eq mcUuid) and (AccountLinks.discordUserId eq discordUserId)
         }.forEach { it.isActive = false }
     }
+    fun unlink(
+        mcUuid: UUID,
+    ) = transaction {
+        AccountLinkEntity.find {
+            (AccountLinks.mcUuid eq mcUuid)
+        }.forEach { it.isActive = false }
+    }
+    fun unlink(
+        discordUserId: Long,
+    ) = transaction {
+        AccountLinkEntity.find {
+            (AccountLinks.discordUserId eq discordUserId)
+        }.forEach { it.isActive = false }
+    }
 }

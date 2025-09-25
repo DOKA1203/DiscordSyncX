@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kr.doka.lab.discordsync.api.DiscordSyncApi
 import kr.doka.lab.discordsync.exposed.tables.AccountLinks
 import kr.doka.lab.discordsync.exposed.tables.AuthSessions
 import kr.doka.lab.discordsync.exposed.tables.Tokens
@@ -18,12 +19,12 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class DiscordSyncPlugin : JavaPlugin() {
+class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
     val pluginScope =
         CoroutineScope(
             SupervisorJob() +
                 Dispatchers.Default +
-                CoroutineName("DiscordSyncScope") +
+                CoroutineName("DiscordSyncPluginScope") +
                 CoroutineExceptionHandler { _, e -> logger.severe("Coroutine error: $e") },
         )
 
