@@ -1,5 +1,9 @@
 # DiscordSyncX
 
+
+[![시연 동영상](http://img.youtube.com/vi/9q4E2JzCRJk/0.jpg)](https://www.youtube.com/watch?v=9q4E2JzCRJk)
+
+
 [![GitHub Actions Build Status](https://img.shields.io/github/actions/workflow/status/doka1203/DiscordSyncX/build.yml?branch=main&style=for-the-badge)](https://github.com/doka1203/DiscordSyncX/actions)
 [![Latest Release](https://img.shields.io/github/v/release/doka1203/DiscordSyncX?style=for-the-badge&color=blue)](https://github.com/doka1203/DiscordSyncX/releases)
 [![License](https://img.shields.io/github/license/doka1203/DiscordSyncX?style=for-the-badge&color=lightgrey)](https://github.com/doka1203/DiscordSyncX/blob/main/LICENSE)
@@ -8,9 +12,10 @@
 
 **DiscordSyncX**는 마인크래프트 서버와 디스코드 커뮤니티를 하나로 잇는 가장 확실한 방법입니다. 사용자를 인증하고, 서버 내의 대화와 주요 이벤트들을 지정된 디스코드 채널로 실시간 전송하고, 반대로 디스코드 채널의 대화를 서버로 가져올 수 있습니다.
 
-## ✨ Features
+## ✨ Features(구현됨)
 * **✍️ (중요) 유저 인증**: 인증된 플레이어만 서버에 접속할 수 있도록 허용   <br/><br/>
 
+## ✨ Features(구현 예정)
 * **🔄 양방향 채팅**: 마인크래프트 채팅 ↔ 디스코드 채널 간의 완벽한 실시간 채팅 동기화
 * **👋 접속 알림**: 플레이어의 서버 접속/퇴장 상태를 디스코드 채널에 알림
 * **⚫ 서버 상태 알림**: 서버 시작 및 종료 상태를 디스코드에 전송하여 서버 상태를 쉽게 확인
