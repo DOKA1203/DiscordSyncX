@@ -1,11 +1,17 @@
 package kr.doka.lab.discordsync.api
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kr.doka.lab.discordsync.exposed.repositories.AccountLinkRepository
 import kr.doka.lab.discordsync.exposed.repositories.TokenRepository
-import java.util.*
+import java.util.UUID
 
-class DiscordUserImpl(override val uuid: UUID): DiscordUser {
+class DiscordUserImpl(override val uuid: UUID) : DiscordUser {
     companion object {
         private val accountLinkRepository = AccountLinkRepository()
         private val tokenRepository = TokenRepository()
@@ -18,6 +24,7 @@ class DiscordUserImpl(override val uuid: UUID): DiscordUser {
                     CoroutineExceptionHandler { _, e -> println("Coroutine error: $e") },
             )
     }
+
     private var _discordId: String = ""
 
     override val discordId
@@ -33,13 +40,13 @@ class DiscordUserImpl(override val uuid: UUID): DiscordUser {
 
     init {
         coreScope.launch {
-            val accountLink = withContext(Dispatchers.IO) {
-                accountLinkRepository.findByMinecraftUuid(uuid)
-            }
+            val accountLink =
+                withContext(Dispatchers.IO) {
+                    accountLinkRepository.findByMinecraftUuid(uuid)
+                }
             if (accountLink.isNotEmpty()) {
                 _discordId = accountLink[0].discordUserId.toString()
             }
         }
     }
-
 }

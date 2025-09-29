@@ -6,7 +6,6 @@ import kotlin.reflect.full.companionObjectInstance
 import kotlin.reflect.full.memberProperties
 
 interface DiscordSyncApi {
-
     companion object {
         fun getApi(): DiscordSyncApi {
             val className = "kr.doka.lab.discordsync.DiscordSyncPlugin"
@@ -24,5 +23,4 @@ interface DiscordSyncApi {
             }
         }
     }
-
 }

@@ -35,32 +35,31 @@ class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
         lateinit var pluginConfig: DiscordSyncConfig
     }
 
-
-
     override fun onEnable() {
         instance = this
         saveDefaultConfig()
-        pluginConfig = DiscordSyncConfig(
-            DiscordBotConfig(
-                config.getString("bot.token")!!,
-                config.getString("bot.guildId")!!,
-            ),
-            DiscordApiConfig(
-                config.getString("discord-api.client-id")!!,
-                config.getString("discord-api.client-secret")!!,
-                config.getString("discord-api.redirect-url")!!,
-            ),
-            ServerConfig(
-                config.getInt("server.port", 8080),
-            ),
-            DatabaseConfig(
-                config.getString("database.database")!!,
-                config.getString("database.host")!!,
-                config.getInt("database.port", 3306),
-                config.getString("database.username")!!,
-                config.getString("database.password")!!,
+        pluginConfig =
+            DiscordSyncConfig(
+                DiscordBotConfig(
+                    config.getString("bot.token")!!,
+                    config.getString("bot.guildId")!!,
+                ),
+                DiscordApiConfig(
+                    config.getString("discord-api.client-id")!!,
+                    config.getString("discord-api.client-secret")!!,
+                    config.getString("discord-api.redirect-url")!!,
+                ),
+                ServerConfig(
+                    config.getInt("server.port", 8080),
+                ),
+                DatabaseConfig(
+                    config.getString("database.database")!!,
+                    config.getString("database.host")!!,
+                    config.getInt("database.port", 3306),
+                    config.getString("database.username")!!,
+                    config.getString("database.password")!!,
+                ),
             )
-        )
         authServer = AuthServer(pluginConfig)
 
         if (!connectMariaDB()) {
