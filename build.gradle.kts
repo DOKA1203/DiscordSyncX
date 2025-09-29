@@ -97,5 +97,11 @@ tasks.named<Jar>("jar") {
     from(project(":discord-sync-api").extensions.getByType<SourceSetContainer>()["main"].output)
     from(project(":discord-sync-plugin").extensions.getByType<SourceSetContainer>()["main"].output)
     from(project(":discord-sync-auth").extensions.getByType<SourceSetContainer>()["main"].output)
-    destinationDirectory.set(file("D:\\Servers\\abdlcraft\\plugins"))
+    val osName = System.getProperty("os.name").lowercase()
+
+    val isWindows = osName.contains("win")
+
+    if(isWindows) {
+        destinationDirectory.set(file("D:\\Servers\\abdlcraft\\plugins"))
+    }
 }
