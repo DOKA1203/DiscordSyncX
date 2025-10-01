@@ -97,10 +97,10 @@ class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
                 }
 
             Database.connect(HikariDataSource(cfg))
-            logger.info("✅ MariaDB 연결 성공")
+            logger.info("MariaDB 연결 성공")
             true
         } catch (ex: Exception) {
-            logger.severe("❌ MariaDB 연결 실패: ${ex.message}")
+            logger.severe("MariaDB 연결 실패: ${ex.message}")
             ex.printStackTrace()
             false
         }
