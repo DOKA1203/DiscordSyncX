@@ -24,7 +24,7 @@ class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
         CoroutineScope(
             SupervisorJob() +
                 Dispatchers.Default +
-                CoroutineName("DiscordSyncPluginScope") +
+                CoroutineName("DiscordSyncX-PluginScope") +
                 CoroutineExceptionHandler { _, e -> logger.severe("Coroutine error: $e") },
         )
 
