@@ -92,11 +92,13 @@ tasks.processResources {
 }
 
 tasks.named<Jar>("jar") {
-    dependsOn(":discord-sync-core:jar", ":discord-sync-api:jar", ":discord-sync-plugin:jar", ":discord-sync-auth:jar")
+    dependsOn(":discord-sync-core:jar", ":discord-sync-api:jar", ":discord-sync-plugin:jar", ":discord-sync-auth:jar", ":discord-sync-bot:jar")
     from(project(":discord-sync-core").extensions.getByType<SourceSetContainer>()["main"].output)
     from(project(":discord-sync-api").extensions.getByType<SourceSetContainer>()["main"].output)
     from(project(":discord-sync-plugin").extensions.getByType<SourceSetContainer>()["main"].output)
     from(project(":discord-sync-auth").extensions.getByType<SourceSetContainer>()["main"].output)
+    from(project(":discord-sync-bot").extensions.getByType<SourceSetContainer>()["main"].output)
+
     val osName = System.getProperty("os.name").lowercase()
 
     val isWindows = osName.contains("win")
