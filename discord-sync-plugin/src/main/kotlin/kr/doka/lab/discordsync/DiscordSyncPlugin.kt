@@ -33,6 +33,7 @@ class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
         lateinit var authServer: AuthServer
 
         lateinit var pluginConfig: DiscordSyncConfig
+        lateinit var bot: DiscordBot
     }
 
     override fun onEnable() {
@@ -62,7 +63,7 @@ class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
                 ),
             )
         authServer = AuthServer(pluginConfig)
-        val bot = DiscordBot(pluginConfig)
+        bot = DiscordBot(pluginConfig)
         if (!connectMariaDB()) {
             logger.severe("데이터베이스 연결에 실패하여 플러그인을 비활성화합니다.")
             // 안전하게 플러그인 종료
@@ -79,6 +80,7 @@ class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
 
     override fun onDisable() {
         authServer.app.stop()
+        bot.stop()
     }
 
     fun connectMariaDB(): Boolean {

@@ -55,4 +55,11 @@ class DiscordBot(private val config: DiscordSyncConfig) {
             }
         }
     }
+
+    fun stop() {
+        coroutineScope.launch {
+            kord.shutdown()
+            println("Discord Bot Shutting down...")
+        }
+    }
 }
