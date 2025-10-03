@@ -43,7 +43,7 @@ class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
                 DiscordBotConfig(
                     config.getBoolean("bot.enable", false),
                     config.getString("bot.token")!!,
-                    config.getString("bot.guildId")!!,
+                    config.getString("bot.guild-id")!!,
                 ),
                 DiscordApiConfig(
                     config.getString("discord-api.client-id")!!,
