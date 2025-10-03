@@ -13,7 +13,7 @@ public class DiscordSyncPluginLoader implements PluginLoader {
     public void classloader(PluginClasspathBuilder classpathBuilder) {
         MavenLibraryResolver resolver = new MavenLibraryResolver();
         resolver.addRepository(new RemoteRepository.Builder("central", "default", MavenLibraryResolver.MAVEN_CENTRAL_DEFAULT_MIRROR).build());
-        resolver.addRepository(new RemoteRepository.Builder("sonatype", "default", "https://oss.sonatype.org/content/repositories/snapshots").build());
+        resolver.addRepository(new RemoteRepository.Builder("sonatype", "default", "https://repo.kord.dev/snapshots").build());
 
 
         resolver.addDependency(new Dependency(new DefaultArtifact("dev.kord:kord-core:0.17.0"), null));

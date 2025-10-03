@@ -31,9 +31,9 @@ class AuthServer(val config: DiscordSyncConfig) {
 
     init {
         app.get("/") { ctx ->
-            val user = ctx.sessionAttribute<DiscordUser>("user")
+            // val user = ctx.sessionAttribute<DiscordUser>("user")
             // ctx.json(mapOf("logged_in" to (user != null), "user" to user))
-
+            println("WTFFFFFFFF")
             ctx.redirect("https://doka.kr")
         }
 

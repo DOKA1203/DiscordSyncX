@@ -8,8 +8,6 @@ import dev.kord.gateway.PrivilegedIntent
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
@@ -18,7 +16,6 @@ import java.util.concurrent.Executors
 class DiscordBot(private val config: DiscordSyncConfig) {
     lateinit var kord: Kord
 
-    @OptIn(DelicateCoroutinesApi::class, ExperimentalCoroutinesApi::class)
     val coroutineScope: CoroutineScope =
         CoroutineScope(
             SupervisorJob() +
