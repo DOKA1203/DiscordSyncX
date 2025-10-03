@@ -41,7 +41,7 @@ class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
         pluginConfig =
             DiscordSyncConfig(
                 DiscordBotConfig(
-                    config.getBoolean("bot.enable"),
+                    config.getBoolean("bot.enable", false),
                     config.getString("bot.token")!!,
                     config.getString("bot.guildId")!!,
                 ),
