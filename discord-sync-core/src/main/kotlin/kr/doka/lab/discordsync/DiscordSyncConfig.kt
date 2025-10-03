@@ -24,6 +24,7 @@ data class DiscordApiConfig(
 )
 
 data class DiscordBotConfig(
+    val enable: Boolean = false,
     val botToken: String,
     val guildId: String,
 )

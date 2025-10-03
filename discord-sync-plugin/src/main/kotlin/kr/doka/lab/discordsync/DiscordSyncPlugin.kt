@@ -20,7 +20,7 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
-    val pluginScope =
+    val pluginScope: CoroutineScope =
         CoroutineScope(
             SupervisorJob() +
                 Dispatchers.Default +
@@ -41,6 +41,7 @@ class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
         pluginConfig =
             DiscordSyncConfig(
                 DiscordBotConfig(
+                    config.getBoolean("bot.enable"),
                     config.getString("bot.token")!!,
                     config.getString("bot.guildId")!!,
                 ),
@@ -61,7 +62,7 @@ class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
                 ),
             )
         authServer = AuthServer(pluginConfig)
-
+        val bot = DiscordBot(pluginConfig)
         if (!connectMariaDB()) {
             logger.severe("데이터베이스 연결에 실패하여 플러그인을 비활성화합니다.")
             // 안전하게 플러그인 종료

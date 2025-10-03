@@ -1,6 +1,5 @@
 plugins {
     kotlin("jvm")
-    java
 }
 
 group = "kr.doka.lab"
@@ -11,12 +10,10 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":discord-sync-api"))
-    implementation(project(":discord-sync-core"))
-    implementation(project(":discord-sync-auth"))
-    implementation(project(":discord-sync-bot"))
-
     testImplementation(kotlin("test"))
+    implementation("dev.kord:kord-core:0.17.0")
+    implementation(project(":discord-sync-core"))
+    implementation(project(":discord-sync-api"))
 }
 
 tasks.test {
