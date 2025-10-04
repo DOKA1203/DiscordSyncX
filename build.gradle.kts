@@ -66,9 +66,9 @@ version = "1.0-SNAPSHOT"
 
 tasks.withType<ShadowJar> {
     archiveClassifier.set("")
-    dependencies {
+    /* dependencies {
         include(dependency("net.dv8tion:JDA:5.6.1"))
-    }
+    }*/
     dependsOn(":discord-sync-core:jar", ":discord-sync-api:jar", ":discord-sync-plugin:jar", ":discord-sync-auth:jar", ":discord-sync-bot:jar")
     from(project(":discord-sync-core").extensions.getByType<SourceSetContainer>()["main"].output)
     from(project(":discord-sync-api").extensions.getByType<SourceSetContainer>()["main"].output)
