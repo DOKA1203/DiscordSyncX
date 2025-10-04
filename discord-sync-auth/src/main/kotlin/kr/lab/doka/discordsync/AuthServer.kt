@@ -33,8 +33,8 @@ class AuthServer(val config: DiscordSyncConfig) {
         app.get("/") { ctx ->
             // val user = ctx.sessionAttribute<DiscordUser>("user")
             // ctx.json(mapOf("logged_in" to (user != null), "user" to user))
-            println("WTFFFFFFFF")
-            ctx.redirect("https://doka.kr")
+            // println("WTFFFFFFFF")
+            ctx.redirect("https://naver.com")
         }
 
         // 인증 시작

@@ -7,12 +7,11 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation("dev.kord:kord-core:0.17.0")
+    implementation("net.dv8tion:JDA:5.6.1")
     implementation(project(":discord-sync-core"))
     implementation(project(":discord-sync-api"))
 }

@@ -1,21 +1,21 @@
 package kr.doka.lab.discordsync
 
-import dev.kord.core.Kord
-import dev.kord.core.event.message.MessageCreateEvent
-import dev.kord.core.on
-import dev.kord.gateway.Intent
-import dev.kord.gateway.PrivilegedIntent
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
+import net.dv8tion.jda.api.JDA
+import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent
+import net.dv8tion.jda.api.hooks.AnnotatedEventManager
+import net.dv8tion.jda.api.hooks.SubscribeEvent
+import net.dv8tion.jda.api.requests.GatewayIntent
 import java.util.concurrent.Executors
 
 class DiscordBot(private val config: DiscordSyncConfig) {
-    lateinit var kord: Kord
-
+    lateinit var jda: JDA
     val coroutineScope: CoroutineScope =
         CoroutineScope(
             SupervisorJob() +
@@ -32,31 +32,29 @@ class DiscordBot(private val config: DiscordSyncConfig) {
 
     fun load() {
         coroutineScope.launch {
-            kord = Kord(config.discordBotConfig.botToken)
-            kord.on<MessageCreateEvent> { // runs every time a message is created that our bot can read
-
-                // ignore other bots, even ourselves. We only serve humans here!
-                if (message.author?.isBot != false) return@on
-
-                // check if our command is being invoked
-                if (message.content != "!ping") return@on
-
-                // all clear, give them the pong!
-                message.channel.createMessage("pong! ${Thread.currentThread().name}")
-            }
-
-            kord.login {
-                // we need to specify this to receive the content of messages
-                @OptIn(PrivilegedIntent::class)
-                intents += Intent.MessageContent
-            }
+            jda =
+                JDABuilder.createDefault(config.discordBotConfig.botToken)
+                    .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
+                    .setEventManager(AnnotatedEventManager())
+                    .addEventListeners(DiscordEventListener())
+                    .build()
         }
     }
 
     fun stop() {
-        coroutineScope.launch {
-            kord.shutdown()
-            println("Discord Bot Shutting down...")
+        jda.shutdown()
+    }
+
+    private class DiscordEventListener {
+        @SubscribeEvent
+        fun ohHeyAMessage(event: MessageReceivedEvent) {
+            if (event.author.isBot) return
+            if (event.message.contentDisplay == "stop")
+                {
+                    event.jda.shutdown()
+                }
+            event.message.reply("Here is ${Thread.currentThread().name}").queue()
+            println(event.message.contentDisplay)
         }
     }
 }
