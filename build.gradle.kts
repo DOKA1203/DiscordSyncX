@@ -9,10 +9,6 @@ plugins {
     id("com.diffplug.spotless") version "6.25.0" apply false
 }
 
-dependencies {
-    implementation("net.dv8tion:JDA:5.6.1")
-}
-
 allprojects {
     apply(plugin = "java")
     apply(plugin = "org.jetbrains.kotlin.jvm")
@@ -26,7 +22,7 @@ allprojects {
     }
 
     dependencies {
-        compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+        // compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
 
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
@@ -39,9 +35,9 @@ allprojects {
 
         implementation("com.zaxxer:HikariCP:5.1.0")
         implementation("org.mariadb.jdbc:mariadb-java-client:3.3.3")
-        implementation("io.javalin:javalin:6.7.0")
-        implementation("org.slf4j:slf4j-simple:2.0.16")
-        implementation("com.github.kittinunf.fuel:fuel:2.3.1")
+        // implementation("io.javalin:javalin:6.7.0")
+        // implementation("org.slf4j:slf4j-simple:2.0.16")
+        // implementation("com.github.kittinunf.fuel:fuel:2.3.1")
     }
 }
 
@@ -69,12 +65,12 @@ tasks.withType<ShadowJar> {
     /* dependencies {
         include(dependency("net.dv8tion:JDA:5.6.1"))
     }*/
-    dependsOn(":discord-sync-core:jar", ":discord-sync-api:jar", ":discord-sync-plugin:jar", ":discord-sync-auth:jar", ":discord-sync-bot:jar")
+    /* dependsOn(":discord-sync-core:jar", ":discord-sync-api:jar", ":discord-sync-plugin:jar", ":discord-sync-auth:jar", ":discord-sync-bot:jar")
     from(project(":discord-sync-core").extensions.getByType<SourceSetContainer>()["main"].output)
     from(project(":discord-sync-api").extensions.getByType<SourceSetContainer>()["main"].output)
     from(project(":discord-sync-plugin").extensions.getByType<SourceSetContainer>()["main"].output)
     from(project(":discord-sync-auth").extensions.getByType<SourceSetContainer>()["main"].output)
-    from(project(":discord-sync-bot").extensions.getByType<SourceSetContainer>()["main"].output)
+    from(project(":discord-sync-bot").extensions.getByType<SourceSetContainer>()["main"].output)*/
 }
 
 tasks.build {

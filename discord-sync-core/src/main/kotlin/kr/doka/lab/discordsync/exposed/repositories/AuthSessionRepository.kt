@@ -1,10 +1,9 @@
 package kr.doka.lab.discordsync.exposed.repositories
 
-import kr.doka.lab.discordsync.api.AuthStatus
-import kr.doka.lab.discordsync.api.dto.AuthSession
+import kr.doka.lab.discordsync.AuthStatus
 import kr.doka.lab.discordsync.exposed.entities.AuthSessionEntity
 import kr.doka.lab.discordsync.exposed.tables.AuthSessions
-import kr.doka.lab.discordsync.exposed.toDTO
+
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.Instant
@@ -14,7 +13,7 @@ class AuthSessionRepository {
     fun create(
         mcUuid: UUID,
         ttlSeconds: Long = 600,
-    ): AuthSession =
+    ): AuthSessionEntity =
         transaction {
             val now = Instant.now()
             val state = UUID.randomUUID().toString()
@@ -26,12 +25,12 @@ class AuthSessionRepository {
                 this.status = AuthStatus.PENDING
                 this.createdAt = now
                 this.expiresAt = expiresAt
-            }.toDTO()
+            }
         }
 
-    fun findByState(state: String): AuthSession? =
+    fun findByState(state: String): AuthSessionEntity? =
         transaction {
-            AuthSessionEntity.find { AuthSessions.state eq state }.singleOrNull()?.toDTO()
+            AuthSessionEntity.find { AuthSessions.state eq state }.singleOrNull()
         }
 
     fun markCompleted(state: String) =

@@ -7,7 +7,6 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kr.doka.lab.discordsync.api.DiscordSyncApi
 import kr.doka.lab.discordsync.exposed.tables.AccountLinks
 import kr.doka.lab.discordsync.exposed.tables.AuthSessions
 import kr.doka.lab.discordsync.exposed.tables.Tokens
@@ -18,7 +17,7 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
+class DiscordSyncPlugin : JavaPlugin() {
     val pluginScope: CoroutineScope =
         CoroutineScope(
             SupervisorJob() +
@@ -28,41 +27,16 @@ class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
         )
 
     companion object {
-        lateinit var instance: DiscordSyncPlugin
-        lateinit var authServer: AuthServer
-
+        lateinit var Instance: DiscordSyncPlugin
         lateinit var pluginConfig: DiscordSyncConfig
-        lateinit var bot: DiscordBot
     }
 
     override fun onEnable() {
-        instance = this
+        Instance = this
+
         saveDefaultConfig()
-        pluginConfig =
-            DiscordSyncConfig(
-                DiscordBotConfig(
-                    config.getBoolean("bot.enable", false),
-                    config.getString("bot.token")!!,
-                    config.getString("bot.guild-id")!!,
-                ),
-                DiscordApiConfig(
-                    config.getString("discord-api.client-id")!!,
-                    config.getString("discord-api.client-secret")!!,
-                    config.getString("discord-api.redirect-url")!!,
-                ),
-                ServerConfig(
-                    config.getInt("server.port", 8080),
-                ),
-                DatabaseConfig(
-                    config.getString("database.database")!!,
-                    config.getString("database.host")!!,
-                    config.getInt("database.port", 3306),
-                    config.getString("database.username")!!,
-                    config.getString("database.password")!!,
-                ),
-            )
-        authServer = AuthServer(pluginConfig)
-        bot = DiscordBot(pluginConfig)
+        pluginConfig = loadConfig()
+
         if (!connectMariaDB()) {
             logger.severe("데이터베이스 연결에 실패하여 플러그인을 비활성화합니다.")
             // 안전하게 플러그인 종료
@@ -78,9 +52,21 @@ class DiscordSyncPlugin : JavaPlugin(), DiscordSyncApi {
     }
 
     override fun onDisable() {
-        authServer.app.stop()
-        bot.stop()
+
     }
+
+    fun loadConfig() =
+        DiscordSyncConfig(
+            databaseConfig = DatabaseConfig(
+                database = config.getString("database.database", "Experiments")!!,
+                host = config.getString("database.host", "localhost")!!,
+                port = config.getInt("database.port", 3306),
+                username = config.getString("database.username", "root")!!,
+                password = config.getString("database.password", "root")!!,
+            ),
+        )
+
+
 
     fun connectMariaDB(): Boolean {
         return try {

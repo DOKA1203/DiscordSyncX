@@ -1,0 +1,8 @@
+# Database Connection Settings
+# 데이터베이스 연결 정보
+database:
+    host: "192.168.0.113"
+    port: 3306
+    username: "root"
+    password: "YOUR_DB_PASSWORD_HERE"
+    database: "Experiments"

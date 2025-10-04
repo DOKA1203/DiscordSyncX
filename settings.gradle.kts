@@ -3,8 +3,5 @@ plugins {
 }
 rootProject.name = "DiscordSyncX"
 include("discord-sync-core")
-include("discord-sync-api")
-include("discord-sync-plugin")
-include("discord-sync-auth")
-
-include("discord-sync-bot")
+include("discord-sync-paper")
+include("discord-sync-velocity")

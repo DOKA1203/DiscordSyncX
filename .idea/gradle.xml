@@ -9,11 +9,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/discord-sync-api" />
-            <option value="$PROJECT_DIR$/discord-sync-auth" />
-            <option value="$PROJECT_DIR$/discord-sync-bot" />
             <option value="$PROJECT_DIR$/discord-sync-core" />
-            <option value="$PROJECT_DIR$/discord-sync-plugin" />
+            <option value="$PROJECT_DIR$/discord-sync-paper" />
+            <option value="$PROJECT_DIR$/discord-sync-velocity" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -1,4 +1,4 @@
-package kr.doka.lab.discordsync.api
+package kr.doka.lab.discordsync
 
 /**
  * 인증 세션 상태

@@ -1,9 +1,7 @@
 package kr.doka.lab.discordsync.exposed.repositories
 
-import kr.doka.lab.discordsync.api.dto.AccountLink
 import kr.doka.lab.discordsync.exposed.entities.AccountLinkEntity
 import kr.doka.lab.discordsync.exposed.tables.AccountLinks
-import kr.doka.lab.discordsync.exposed.toDTO
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.Instant
@@ -13,7 +11,7 @@ class AccountLinkRepository {
     fun link(
         mcUuid: UUID,
         discordUserId: Long,
-    ): AccountLink =
+    ): AccountLinkEntity =
         transaction {
             val now = Instant.now()
             val existing =
@@ -32,19 +30,18 @@ class AccountLinkRepository {
                     this.verifiedAt = now
                     this.isActive = true
                 }
-            entity.toDTO()
+            entity
         }
 
-    fun findByMinecraftUuid(mcUuid: UUID): List<AccountLink> =
+    fun findByMinecraftUuid(mcUuid: UUID): List<AccountLinkEntity> =
         transaction {
-            AccountLinkEntity.find { AccountLinks.mcUuid eq mcUuid }
-                .map { it.toDTO() }
+            AccountLinkEntity.find { AccountLinks.mcUuid eq mcUuid }.map { it }
         }
 
-    fun findByDiscordId(discordUserId: Long): List<AccountLink> =
+    fun findByDiscordId(discordUserId: Long): List<AccountLinkEntity> =
         transaction {
             AccountLinkEntity.find { AccountLinks.discordUserId eq discordUserId }
-                .map { it.toDTO() }
+                .map { it }
         }
 
     fun unlink(

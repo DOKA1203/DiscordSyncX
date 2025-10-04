@@ -1,6 +1,6 @@
 package kr.doka.lab.discordsync.exposed.tables
 
-import kr.doka.lab.discordsync.api.AuthStatus
+import kr.doka.lab.discordsync.AuthStatus
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.javatime.timestamp
 
