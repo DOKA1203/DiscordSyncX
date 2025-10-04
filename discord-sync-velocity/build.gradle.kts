@@ -1,21 +1,10 @@
 plugins {
-    kotlin("jvm")
-}
-
-group = "kr.doka.lab"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
+    kotlin("kapt")
+    id("com.gradleup.shadow") version "8.3.0"
 }
 
 dependencies {
     testImplementation(kotlin("test"))
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-kotlin {
-    jvmToolchain(21)
+    compileOnly("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
+    kapt("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
 }

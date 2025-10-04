@@ -1,7 +1,7 @@
 name: DiscordSyncX
 version: '1.0-SNAPSHOT'
-main: kr.doka.lab.discordsync.DiscordSyncPlugin
+main: kr.doka.lab.discordsync.paper.DiscordSyncPaperPlugin
 api-version: '1.21'
 authors: [ DOKA1203 ]
-bootstrapper: kr.doka.lab.discordsync.DiscordSyncPluginBootstrapper
-loader: kr.doka.lab.discordsync.DiscordSyncPluginLoader
+bootstrapper: kr.doka.lab.discordsync.paper.DiscordSyncPluginBootstrapper
+loader: kr.doka.lab.discordsync.paper.DiscordSyncPluginLoader

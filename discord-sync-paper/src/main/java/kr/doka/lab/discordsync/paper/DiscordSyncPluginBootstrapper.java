@@ -1,4 +1,4 @@
-package kr.doka.lab.discordsync;
+package kr.doka.lab.discordsync.paper;
 
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
@@ -15,6 +15,6 @@ public class DiscordSyncPluginBootstrapper implements PluginBootstrap {
 
     @Override
     public JavaPlugin createPlugin(PluginProviderContext context) {
-        return new DiscordSyncPlugin();
+        return new DiscordSyncPaperPlugin();
     }
 }

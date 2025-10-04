@@ -1,4 +1,4 @@
-package kr.doka.lab.discordsync
+package kr.doka.lab.discordsync.paper
 
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeout

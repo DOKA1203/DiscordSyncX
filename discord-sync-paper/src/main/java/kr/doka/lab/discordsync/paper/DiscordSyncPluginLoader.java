@@ -1,4 +1,4 @@
-package kr.doka.lab.discordsync;
+package kr.doka.lab.discordsync.paper;
 
 import io.papermc.paper.plugin.loader.PluginClasspathBuilder;
 import io.papermc.paper.plugin.loader.PluginLoader;

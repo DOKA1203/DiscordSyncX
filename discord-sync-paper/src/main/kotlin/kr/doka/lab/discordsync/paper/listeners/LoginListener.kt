@@ -1,4 +1,4 @@
-package kr.doka.lab.discordsync.listeners
+package kr.doka.lab.discordsync.paper.listeners
 
 import io.papermc.paper.dialog.Dialog
 import io.papermc.paper.event.connection.configuration.AsyncPlayerConnectionConfigureEvent
@@ -8,7 +8,7 @@ import io.papermc.paper.registry.data.dialog.action.DialogAction
 import io.papermc.paper.registry.data.dialog.body.DialogBody
 import io.papermc.paper.registry.data.dialog.type.DialogType
 import kr.doka.lab.discordsync.AuthStatus
-import kr.doka.lab.discordsync.DiscordSyncPlugin.Companion.Instance
+import kr.doka.lab.discordsync.paper.DiscordSyncPaperPlugin.Companion.Instance
 import kr.doka.lab.discordsync.exposed.repositories.AccountLinkRepository
 import kr.doka.lab.discordsync.exposed.repositories.AuthSessionRepository
 import net.kyori.adventure.text.Component

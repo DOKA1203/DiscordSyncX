@@ -1,4 +1,4 @@
-package kr.doka.lab.discordsync
+package kr.doka.lab.discordsync.paper
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -7,17 +7,19 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kr.doka.lab.discordsync.DatabaseConfig
+import kr.doka.lab.discordsync.DiscordSyncConfig
 import kr.doka.lab.discordsync.exposed.tables.AccountLinks
 import kr.doka.lab.discordsync.exposed.tables.AuthSessions
 import kr.doka.lab.discordsync.exposed.tables.Tokens
-import kr.doka.lab.discordsync.listeners.LoginListener
+import kr.doka.lab.discordsync.paper.listeners.LoginListener
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class DiscordSyncPlugin : JavaPlugin() {
+class DiscordSyncPaperPlugin : JavaPlugin() {
     val pluginScope: CoroutineScope =
         CoroutineScope(
             SupervisorJob() +
@@ -27,7 +29,7 @@ class DiscordSyncPlugin : JavaPlugin() {
         )
 
     companion object {
-        lateinit var Instance: DiscordSyncPlugin
+        lateinit var Instance: DiscordSyncPaperPlugin
         lateinit var pluginConfig: DiscordSyncConfig
     }
 
