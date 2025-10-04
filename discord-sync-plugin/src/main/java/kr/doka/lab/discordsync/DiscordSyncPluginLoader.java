@@ -14,7 +14,7 @@ public class DiscordSyncPluginLoader implements PluginLoader {
         MavenLibraryResolver resolver = new MavenLibraryResolver();
         resolver.addRepository(new RemoteRepository.Builder("central", "default", MavenLibraryResolver.MAVEN_CENTRAL_DEFAULT_MIRROR).build());
 
-        resolver.addDependency(new Dependency(new DefaultArtifact("net.dv8tion:JDA:5.6.1"), null));
+        // resolver.addDependency(new Dependency(new DefaultArtifact("net.dv8tion:JDA:5.6.1"), null)); 얘는 ShadowJar로 포함시킴. paper-plugin이 안정화된다면 복구 예정
 
         resolver.addDependency(new Dependency(new DefaultArtifact("org.jetbrains.exposed:exposed-core:0.52.0"), null));
         resolver.addDependency(new Dependency(new DefaultArtifact("org.jetbrains.exposed:exposed-dao:0.52.0"), null));

@@ -12,7 +12,6 @@ import kr.doka.lab.discordsync.exposed.tables.AccountLinks
 import kr.doka.lab.discordsync.exposed.tables.AuthSessions
 import kr.doka.lab.discordsync.exposed.tables.Tokens
 import kr.doka.lab.discordsync.listeners.LoginListener
-import kr.lab.doka.discordsync.AuthServer
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.exposed.sql.Database

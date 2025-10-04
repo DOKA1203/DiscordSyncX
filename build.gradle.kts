@@ -1,12 +1,16 @@
+import com.diffplug.gradle.spotless.SpotlessExtension
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     kotlin("jvm") version "2.2.10"
     java
-
     id("com.gradleup.shadow") version "8.3.0"
     kotlin("plugin.serialization") version "2.2.10"
     id("com.diffplug.spotless") version "6.25.0" apply false
+}
+
+dependencies {
+    implementation("net.dv8tion:JDA:5.6.1")
 }
 
 allprojects {
@@ -41,28 +45,15 @@ allprojects {
     }
 }
 
-// /build.gradle.kts (루트 프로젝트)
-
 subprojects {
-    // 각 서브모듈에 spotless 플러그인을 적용합니다.
     apply(plugin = "com.diffplug.spotless")
 
-    // spotless 설정을 구성합니다.
-    configure<com.diffplug.gradle.spotless.SpotlessExtension> {
-        // 모든 Kotlin 소스 파일(*.kt)에 적용될 규칙
+    configure<SpotlessExtension> {
         kotlin {
-            target("src/**/*.kt") // 적용할 파일 경로 지정 (기본값이라 생략 가능)
-
-            // ktlint 최신 버전을 사용하도록 설정합니다.
-            // 버전을 명시하면 특정 버전으로 고정할 수 있습니다.
+            target("src/**/*.kt")
             ktlint()
                 .setEditorConfigPath("$rootDir/.editorconfig") // 루트의 .editorconfig 파일을 사용하도록 지정
-
-            // 라이선스 헤더 등을 추가할 수도 있습니다.
-            // licenseHeaderFile("$rootDir/spotless/copyright.kt")
         }
-
-        // 추가: Gradle Kotlin DSL 파일(*.gradle.kts)에도 적용
         kotlinGradle {
             target("*.gradle.kts")
             ktlint()
@@ -74,8 +65,16 @@ group = "kr.doka.lab"
 version = "1.0-SNAPSHOT"
 
 tasks.withType<ShadowJar> {
-    // relocate("kotlinx.serialization", "kr.lab.doka.discordsync.libs.kotlinx.serialization")
-    archiveClassifier.set("") // 'all' 같은 접미사 제거
+    archiveClassifier.set("")
+    dependencies {
+        include(dependency("net.dv8tion:JDA:5.6.1"))
+    }
+    dependsOn(":discord-sync-core:jar", ":discord-sync-api:jar", ":discord-sync-plugin:jar", ":discord-sync-auth:jar", ":discord-sync-bot:jar")
+    from(project(":discord-sync-core").extensions.getByType<SourceSetContainer>()["main"].output)
+    from(project(":discord-sync-api").extensions.getByType<SourceSetContainer>()["main"].output)
+    from(project(":discord-sync-plugin").extensions.getByType<SourceSetContainer>()["main"].output)
+    from(project(":discord-sync-auth").extensions.getByType<SourceSetContainer>()["main"].output)
+    from(project(":discord-sync-bot").extensions.getByType<SourceSetContainer>()["main"].output)
 }
 
 tasks.build {
@@ -88,22 +87,5 @@ tasks.processResources {
     filteringCharset = "UTF-8"
     filesMatching("paper-plugin.yml") {
         expand(props)
-    }
-}
-
-tasks.named<Jar>("jar") {
-    dependsOn(":discord-sync-core:jar", ":discord-sync-api:jar", ":discord-sync-plugin:jar", ":discord-sync-auth:jar", ":discord-sync-bot:jar")
-    from(project(":discord-sync-core").extensions.getByType<SourceSetContainer>()["main"].output)
-    from(project(":discord-sync-api").extensions.getByType<SourceSetContainer>()["main"].output)
-    from(project(":discord-sync-plugin").extensions.getByType<SourceSetContainer>()["main"].output)
-    from(project(":discord-sync-auth").extensions.getByType<SourceSetContainer>()["main"].output)
-    from(project(":discord-sync-bot").extensions.getByType<SourceSetContainer>()["main"].output)
-
-    val osName = System.getProperty("os.name").lowercase()
-
-    val isWindows = osName.contains("win")
-
-    if(isWindows) {
-        destinationDirectory.set(file("D:\\Servers\\abdlcraft\\plugins"))
     }
 }

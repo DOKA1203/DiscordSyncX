@@ -1,8 +1,7 @@
-package kr.lab.doka.discordsync
+package kr.doka.lab.discordsync
 
 import io.javalin.Javalin
 import io.javalin.http.HttpStatus
-import kr.doka.lab.discordsync.DiscordSyncConfig
 import kr.doka.lab.discordsync.api.dto.Token
 import kr.doka.lab.discordsync.discord.DiscordUser
 import kr.doka.lab.discordsync.exposed.repositories.AccountLinkRepository

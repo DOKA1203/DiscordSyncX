@@ -1,9 +1,8 @@
-package kr.lab.doka.discordsync
+package kr.doka.lab.discordsync
 
 import com.github.kittinunf.fuel.Fuel
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import kr.doka.lab.discordsync.DiscordSyncConfig
 import kr.doka.lab.discordsync.discord.DiscordUser
 
 class DiscordHttp(val config: DiscordSyncConfig) {
