@@ -49,10 +49,9 @@ class DiscordBot(private val config: DiscordSyncConfig) {
         @SubscribeEvent
         fun ohHeyAMessage(event: MessageReceivedEvent) {
             if (event.author.isBot) return
-            if (event.message.contentDisplay == "stop")
-                {
-                    event.jda.shutdown()
-                }
+            if (event.message.contentDisplay == "stop") {
+                event.jda.shutdown()
+            }
             event.message.reply("Here is ${Thread.currentThread().name}").queue()
             println(event.message.contentDisplay)
         }
