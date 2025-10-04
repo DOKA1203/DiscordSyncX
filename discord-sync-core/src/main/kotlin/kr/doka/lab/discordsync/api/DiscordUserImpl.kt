@@ -21,7 +21,7 @@ class DiscordUserImpl(override val uuid: UUID) : DiscordUser {
                 SupervisorJob() +
                     Dispatchers.Default +
                     CoroutineName("DiscordSyncCoreScope") +
-                    CoroutineExceptionHandler { _, e -> println("Coroutine error: $e") },
+                    CoroutineExceptionHandler { _, e -> println("DiscordSyncCoreScope - Coroutine error: $e") },
             )
     }
 

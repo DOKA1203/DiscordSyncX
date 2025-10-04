@@ -21,7 +21,7 @@ class DiscordBot(private val config: DiscordSyncConfig) {
             SupervisorJob() +
                 Executors.newSingleThreadExecutor().asCoroutineDispatcher() +
                 CoroutineName("DiscordSyncX-BotScope") +
-                CoroutineExceptionHandler { _, e -> println("Coroutine error: $e") },
+                CoroutineExceptionHandler { _, e -> println("\"DiscordSyncX-BotScope\" - Coroutine error: $e") },
         )
 
     init {
