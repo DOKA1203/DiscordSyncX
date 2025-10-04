@@ -28,11 +28,6 @@ public class DiscordSyncPluginLoader implements PluginLoader {
         resolver.addDependency(new Dependency(new DefaultArtifact("com.zaxxer:HikariCP:5.1.0"), null));
         resolver.addDependency(new Dependency(new DefaultArtifact("org.mariadb.jdbc:mariadb-java-client:3.3.3"), null));
 
-        resolver.addDependency(new Dependency(new DefaultArtifact("org.slf4j:slf4j-simple:2.0.16"), null));
-        resolver.addDependency(new Dependency(new DefaultArtifact("io.javalin:javalin:6.7.0"), null));
-
-        resolver.addDependency(new Dependency(new DefaultArtifact("com.github.kittinunf.fuel:fuel:2.3.1"), null));
-
         classpathBuilder.addLibrary(resolver);
     }
 }

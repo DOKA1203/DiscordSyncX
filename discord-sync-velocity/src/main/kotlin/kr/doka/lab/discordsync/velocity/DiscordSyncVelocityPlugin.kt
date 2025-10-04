@@ -1,6 +1,7 @@
 package kr.doka.lab.discordsync.velocity
 
 import com.velocitypowered.api.event.Subscribe
+import com.velocitypowered.api.event.player.PlayerChatEvent
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent
 import com.velocitypowered.api.plugin.Plugin
 
@@ -8,6 +9,10 @@ import com.velocitypowered.api.plugin.Plugin
 class DiscordSyncVelocityPlugin {
     @Subscribe
     fun onProxyInitialization(event: ProxyInitializeEvent) {
+    }
 
+    @Subscribe
+    fun onChatEvent(event: PlayerChatEvent) {
+        event.message
     }
 }

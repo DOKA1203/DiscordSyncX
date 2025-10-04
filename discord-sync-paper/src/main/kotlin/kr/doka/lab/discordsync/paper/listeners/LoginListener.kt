@@ -8,9 +8,9 @@ import io.papermc.paper.registry.data.dialog.action.DialogAction
 import io.papermc.paper.registry.data.dialog.body.DialogBody
 import io.papermc.paper.registry.data.dialog.type.DialogType
 import kr.doka.lab.discordsync.AuthStatus
-import kr.doka.lab.discordsync.paper.DiscordSyncPaperPlugin.Companion.Instance
 import kr.doka.lab.discordsync.exposed.repositories.AccountLinkRepository
 import kr.doka.lab.discordsync.exposed.repositories.AuthSessionRepository
+import kr.doka.lab.discordsync.paper.DiscordSyncPaperPlugin.Companion.instance
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
@@ -23,7 +23,7 @@ import kotlin.collections.getOrNull
 
 class LoginListener : Listener {
     init {
-        Bukkit.getPluginManager().registerEvents(this, Instance)
+        Bukkit.getPluginManager().registerEvents(this, instance)
     }
 
     private val sessionRepository = AuthSessionRepository()

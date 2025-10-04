@@ -3,7 +3,6 @@ package kr.doka.lab.discordsync.exposed.repositories
 import kr.doka.lab.discordsync.AuthStatus
 import kr.doka.lab.discordsync.exposed.entities.AuthSessionEntity
 import kr.doka.lab.discordsync.exposed.tables.AuthSessions
-
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.Instant

@@ -29,12 +29,12 @@ class DiscordSyncPaperPlugin : JavaPlugin() {
         )
 
     companion object {
-        lateinit var Instance: DiscordSyncPaperPlugin
+        lateinit var instance: DiscordSyncPaperPlugin
         lateinit var pluginConfig: DiscordSyncConfig
     }
 
     override fun onEnable() {
-        Instance = this
+        instance = this
 
         saveDefaultConfig()
         pluginConfig = loadConfig()
@@ -54,21 +54,19 @@ class DiscordSyncPaperPlugin : JavaPlugin() {
     }
 
     override fun onDisable() {
-
     }
 
     fun loadConfig() =
         DiscordSyncConfig(
-            databaseConfig = DatabaseConfig(
-                database = config.getString("database.database", "Experiments")!!,
-                host = config.getString("database.host", "localhost")!!,
-                port = config.getInt("database.port", 3306),
-                username = config.getString("database.username", "root")!!,
-                password = config.getString("database.password", "root")!!,
-            ),
+            databaseConfig =
+                DatabaseConfig(
+                    database = config.getString("database.database", "Experiments")!!,
+                    host = config.getString("database.host", "localhost")!!,
+                    port = config.getInt("database.port", 3306),
+                    username = config.getString("database.username", "root")!!,
+                    password = config.getString("database.password", "root")!!,
+                ),
         )
-
-
 
     fun connectMariaDB(): Boolean {
         return try {
