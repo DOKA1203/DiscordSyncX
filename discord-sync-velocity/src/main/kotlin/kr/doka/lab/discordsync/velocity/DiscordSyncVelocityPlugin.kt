@@ -13,6 +13,5 @@ class DiscordSyncVelocityPlugin {
 
     @Subscribe
     fun onChatEvent(event: PlayerChatEvent) {
-        event.message
     }
 }

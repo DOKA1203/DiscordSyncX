@@ -11,6 +11,7 @@ import kr.doka.lab.discordsync.AuthStatus
 import kr.doka.lab.discordsync.exposed.repositories.AccountLinkRepository
 import kr.doka.lab.discordsync.exposed.repositories.AuthSessionRepository
 import kr.doka.lab.discordsync.paper.DiscordSyncPaperPlugin.Companion.instance
+import kr.doka.lab.discordsync.paper.DiscordSyncPaperPlugin.Companion.pluginConfig
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
@@ -58,7 +59,7 @@ class LoginListener : Listener {
                                     .tooltip(Component.text("클릭하여 인증하세요"))
                                     .action(
                                         DialogAction.staticAction(
-                                            ClickEvent.openUrl("http://127.0.0.1:8080/authentication/${state.state}"),
+                                            ClickEvent.openUrl("${pluginConfig.authConfig.url}/authentication/${state.state}"),
                                         ),
                                     )
                                     .build(),

@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kr.doka.lab.discordsync.AuthConfig
 import kr.doka.lab.discordsync.DatabaseConfig
 import kr.doka.lab.discordsync.DiscordSyncConfig
 import kr.doka.lab.discordsync.exposed.tables.AccountLinks
@@ -41,7 +42,6 @@ class DiscordSyncPaperPlugin : JavaPlugin() {
 
         if (!connectMariaDB()) {
             logger.severe("데이터베이스 연결에 실패하여 플러그인을 비활성화합니다.")
-            // 안전하게 플러그인 종료
             Bukkit.getPluginManager().disablePlugin(this)
             return
         }
@@ -65,6 +65,10 @@ class DiscordSyncPaperPlugin : JavaPlugin() {
                     port = config.getInt("database.port", 3306),
                     username = config.getString("database.username", "root")!!,
                     password = config.getString("database.password", "root")!!,
+                ),
+            authConfig =
+                AuthConfig(
+                    url = config.getString("auth.url")!!,
                 ),
         )
 

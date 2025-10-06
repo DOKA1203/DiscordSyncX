@@ -11,8 +11,6 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-
-    // implementation(project(":discord-sync-api"))
 }
 
 tasks.test {

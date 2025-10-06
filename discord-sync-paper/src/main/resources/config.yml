@@ -6,3 +6,5 @@ database:
     username: "root"
     password: "YOUR_DB_PASSWORD_HERE"
     database: "Experiments"
+auth:
+    url: "http://127.0.0.1:8080"

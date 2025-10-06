@@ -2,6 +2,7 @@ package kr.doka.lab.discordsync
 
 data class DiscordSyncConfig(
     val databaseConfig: DatabaseConfig,
+    val authConfig: AuthConfig,
 )
 
 data class DatabaseConfig(
@@ -10,4 +11,8 @@ data class DatabaseConfig(
     val port: Int,
     val username: String,
     val password: String,
+)
+
+data class AuthConfig(
+    val url: String,
 )
